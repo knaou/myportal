@@ -1,0 +1,16 @@
+FROM python:3.9-alpine
+
+WORKDIR /app
+COPY server/* /app/
+COPY image-assets/server/* /app/
+COPY Pipfile* /app/
+
+RUN apk add --no-cache bash gcc build-base linux-headers \
+ && pip install pipenv \
+ && pipenv install --system \
+ && pip uninstall -y pipenv \
+ && apk del gcc build-base linux-headers \
+ && rm -rf ~/.cache/pip
+
+EXPOSE 5000
+CMD ["/app/docker-run.sh"]

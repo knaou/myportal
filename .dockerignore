@@ -1,0 +1,10 @@
+/.+
+/client/node_modules
+/dist
+/docker-compose.yml
+/data
+__pycache__
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.swp

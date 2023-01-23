@@ -1,0 +1,28 @@
+version: "3"
+volumes:
+  db:
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - 8080:80
+    environment:
+      APP_HOST: app
+    depends_on:
+      - app
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    environment:
+      APP_BIND: 0.0.0.0
+      APP_URL: http://localhost:8080
+      MONGO_URI: "mongodb://mongo/db"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    volumes:
+      - db:/data/db

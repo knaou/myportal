@@ -1,0 +1,17 @@
+FROM node:13 as frontend
+ENV API_URL=/
+WORKDIR /work
+COPY client/ /work/
+COPY client/package.json /work/
+COPY client/yarn.lock /work/
+RUN yarn install
+RUN yarn build
+
+FROM nginx:alpine
+RUN apk add --no-cache bash
+ADD https://git.io/get-mo /usr/local/bin/mo
+RUN chmod +x /usr/local/bin/mo
+COPY image-assets/client/nginx.template.conf /etc/nginx/nginx.template.conf
+COPY --from=frontend /work/dist /usr/share/nginx/html
+COPY image-assets/client/docker-run.sh /docker-run.sh
+CMD ["/docker-run.sh"]

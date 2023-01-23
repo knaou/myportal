@@ -1,0 +1,11 @@
+/.vscode/
+/client/.nuxt
+/client/node_modules
+/client/dist
+/client/static/sw.js
+/client/yarn-debug.log*
+/client/yarn-error.log*
+__pycache__
+.DS_Store
+*.swp
+
